@@ -1,10 +1,11 @@
 # Overview
 
-Pull the ip of any ROBLOX game you are currently in.
+Pull the Server IP of any ROBLOX game you are currently in.
 
 # Why
 
-This is an old project I made a couple years back to expand my knowledge of C# and file inspection. It doesn't have any core purpose beyond being a learning opportunity.
+This is an old project made by daymxn a couple years back.
+Recently finding this I wanted to fix it as his old method he used didn't work
 
 # Instructions
 
