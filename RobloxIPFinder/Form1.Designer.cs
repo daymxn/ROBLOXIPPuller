@@ -49,7 +49,7 @@
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(87, 13);
             this.labelControl1.TabIndex = 1;
-            this.labelControl1.Text = "Made by: Daymon";
+            this.labelControl1.Text = "Made by: Daymon \ Fixed by: ImAFrogOwO";
             // 
             // Form1
             // 
