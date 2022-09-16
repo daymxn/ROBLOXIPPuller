@@ -7,6 +7,8 @@ Pull the Server IP of any ROBLOX game you are currently in.
 This is an old project made by daymxn a couple years back.
 Recently finding this I wanted to fix it as his old method he used didn't work
 
+Using the old method directly finding %AppData% doesnt work. For some reason looping through the "logs" folder and finding the the file you want works
+
 # Instructions
 
 1. Open "ROBLOX IP Puller.exe"
