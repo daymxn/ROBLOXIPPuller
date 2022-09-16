@@ -31,9 +31,6 @@ namespace RobloxIPFinder
 
             string FilePath = Path.Combine(LocalAppDataPath, "Roblox", "logs");
 
-
-            DateTime LastedUpdated = DateTime.MinValue;
-
             DirectoryInfo Info = new DirectoryInfo(FilePath);
             FileInfo[] Files = Info.GetFiles().OrderByDescending(f => f.CreationTime).ToArray();
 
