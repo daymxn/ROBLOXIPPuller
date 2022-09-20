@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using EnvDTE;
+using System.Runtime.InteropServices;
 
 namespace RobloxIPFinder
 {
@@ -19,34 +21,54 @@ namespace RobloxIPFinder
         }
 
         // Made by daymon - twitter.com/disband
+
+        // Fixed by Nick.
+        
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            int counter = 0;
-            string line;
-            string appDataFolder = Environment.GetEnvironmentVariable("LocalAppData");
-            string filePath = Path.Combine(appDataFolder, "Roblox\\logs");
-            DirectoryInfo info = new DirectoryInfo(filePath);
-            FileInfo[] files = info.GetFiles().OrderByDescending(p => p.CreationTime).ToArray();
-            foreach (FileInfo fil in files)
+
+            string LocalAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+            string FilePath = Path.Combine(LocalAppDataPath, "Roblox", "logs");
+
+            DirectoryInfo Info = new DirectoryInfo(FilePath);
+            FileInfo[] Files = Info.GetFiles().OrderByDescending(f => f.CreationTime).ToArray();
+
+            string Line;
+
+            var files = new DirectoryInfo(FilePath).GetFiles("*.*");
+            string latestfile = " ";
+            DateTime lastupdated = DateTime.MinValue;
+            int count = 0;
+            foreach (FileInfo file in files.Reverse())
             {
-                if(Convert.ToString(fil).Contains("GameStartScript"))
+                if (file.LastWriteTime > lastupdated)
                 {
-                    filePath = Path.Combine(filePath, Convert.ToString(fil));
-                    break;
-                }   
-            }
-            System.IO.StreamReader file = new System.IO.StreamReader(filePath);
-            while ((line = file.ReadLine()) != null)
-            {
-                if(line.Contains("Connecting to"))
-                {
-                    int index = line.IndexOf("to") + 2;
-                    string piece = line.Substring(index);
-                    MessageBox.Show(piece);
+                    lastupdated = file.LastWriteTime;
+                    count++;
+                    Console.WriteLine(" LatestFileName : " + file.Name + " " + count);
+                    //Console.ReadLine();
+                    {
+                        latestfile = file.Name;
+
+                        StreamReader FileZ = new StreamReader(new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+                        while ((Line = FileZ.ReadLine()) != null)
+                        {
+                            Console.WriteLine(Line);
+
+                            if (Line.Contains("Connecting to"))
+                            {
+                                int index = Line.IndexOf("to") + 2;
+                                string piece = Line.Substring(index);
+                                MessageBox.Show("IP: " + piece + "\n" + "Path: " + file.FullName);
+                                return;
+                            }
+                        }
+                    }
                 }
-                counter++;
             }
-            file.Close();
+
         }
     }
 }
